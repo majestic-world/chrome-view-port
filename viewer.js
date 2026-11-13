@@ -124,6 +124,7 @@ function render() {
   for (const button of ui.devices.querySelectorAll('.device-btn')) {
     button.classList.toggle('active', button.dataset.id === state.prefs.deviceId);
   }
+  positionIndicator();
   if (document.activeElement !== ui.width) ui.width.value = width;
   if (document.activeElement !== ui.height) ui.height.value = height;
   ui.zoom.value = state.prefs.zoom;
@@ -153,21 +154,44 @@ function buildDeviceNav() {
     button.dataset.id = id;
     return button;
   };
-
-  const groups = GROUPS.map(({ type, label, icon }) => {
+  const makeGroup = (label, icon, buttons) => {
     const group = Object.assign(document.createElement('div'), { className: 'group', title: label });
     group.innerHTML = `<span class="group-icon">${icon}</span>`;
-    for (const device of DEVICES.filter((d) => d.type === type)) {
-      group.append(makeButton(device.id, device.label, `${device.name} — ${device.width} × ${device.height}`));
-    }
+    group.append(...buttons);
     return group;
+  };
+
+  const groups = GROUPS.map(({ type, label, icon }) =>
+    makeGroup(
+      label,
+      icon,
+      DEVICES.filter((d) => d.type === type).map((d) => makeButton(d.id, d.label, `${d.name} — ${d.width} × ${d.height}`)),
+    ),
+  );
+  groups.push(makeGroup('Livre', RESPONSIVE_ICON, [makeButton(RESPONSIVE_ID, 'Livre', 'Redimensionamento livre')]));
+
+  const indicator = Object.assign(document.createElement('span'), { className: 'indicator instant' });
+  const children = [indicator];
+  groups.forEach((group, index) => {
+    if (index > 0) children.push(Object.assign(document.createElement('span'), { className: 'sep' }));
+    children.push(group);
   });
+  ui.devices.replaceChildren(...children);
+  ui.indicator = indicator;
+}
 
-  const free = Object.assign(document.createElement('div'), { className: 'group' });
-  free.innerHTML = `<span class="group-icon">${RESPONSIVE_ICON}</span>`;
-  free.append(makeButton(RESPONSIVE_ID, 'Livre', 'Redimensionamento livre'));
+// Slides the selection chip under the active device; first placement (and font swap) is instant.
+function positionIndicator() {
+  const active = ui.devices.querySelector('.device-btn.active');
+  if (!active) return;
+  ui.indicator.style.setProperty('--x', `${active.offsetLeft}px`);
+  ui.indicator.style.setProperty('--w', `${active.offsetWidth}px`);
+}
 
-  ui.devices.replaceChildren(...groups, free);
+function settleIndicator() {
+  ui.indicator.classList.add('instant');
+  positionIndicator();
+  requestAnimationFrame(() => requestAnimationFrame(() => ui.indicator.classList.remove('instant')));
 }
 
 // ---------- Page loading ----------
@@ -400,6 +424,8 @@ async function init() {
   bindHandles();
   await loadPrefs();
   render();
+  settleIndicator();
+  document.fonts.ready.then(settleIndicator);
 
   const tab = await chrome.tabs.getCurrent();
   state.tabId = tab?.id ?? null;
