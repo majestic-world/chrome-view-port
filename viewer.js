@@ -15,6 +15,7 @@ const DEFAULT_PREFS = {
   landscape: false,
   zoom: 'fit',
   bezel: true,
+  touch: true,
   custom: { width: 430, height: 932 },
 };
 
@@ -46,6 +47,7 @@ const ui = {
   rotate: $('rotate'),
   zoom: $('zoom'),
   bezel: $('bezel'),
+  touch: $('touch'),
   exit: $('exit'),
   theme: $('theme'),
 };
@@ -61,6 +63,9 @@ const state = {
 
 const clampSize = (value) => Math.min(MAX_SIZE, Math.max(MIN_SIZE, Math.round(value)));
 const currentDevice = () => DEVICES.find((device) => device.id === state.prefs.deviceId) ?? null;
+// Free mode behaves like Chrome's responsive mobile mode, so it counts as a touch device.
+const deviceSupportsTouch = () => currentDevice()?.touch ?? true;
+const touchActive = () => state.prefs.touch && deviceSupportsTouch();
 
 function viewportSize() {
   const device = currentDevice();
@@ -131,6 +136,8 @@ function render() {
   ui.zoom.value = state.prefs.zoom;
   ui.bezel.disabled = !device;
   ui.bezel.setAttribute('aria-pressed', String(Boolean(bezel)));
+  ui.touch.disabled = !deviceSupportsTouch();
+  ui.touch.setAttribute('aria-pressed', String(touchActive()));
 
   const parts = [
     device?.name ?? 'Livre',
@@ -269,7 +276,7 @@ function postToFrame(message) {
 
 function sendConfig() {
   const device = currentDevice();
-  postToFrame({ type: 'config', hideScrollbars: device?.overlayScrollbars ?? true, touch: device?.touch ?? true });
+  postToFrame({ type: 'config', hideScrollbars: device?.overlayScrollbars ?? true, touch: touchActive() });
 }
 
 // ---------- Free resize ----------
@@ -389,6 +396,10 @@ function bindEvents() {
   });
   ui.bezel.addEventListener('click', () => {
     state.prefs.bezel = !state.prefs.bezel;
+    commit();
+  });
+  ui.touch.addEventListener('click', () => {
+    state.prefs.touch = !state.prefs.touch;
     commit();
   });
   ui.theme.addEventListener('click', () => {
