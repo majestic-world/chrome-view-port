@@ -9,18 +9,70 @@
 :root {
   --bg: #0f1012;
   --bar: #131417;
+  --bar-top: #151619;
+  --bar-border: rgba(255, 255, 255, 0.045);
+  --bar-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.9);
   --surface: #18191d;
+  --island-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035), 0 1px 2px rgba(0, 0, 0, 0.45), 0 8px 22px -14px rgba(0, 0, 0, 0.8);
   --edge: rgba(255, 255, 255, 0.07);
   --edge-strong: rgba(255, 255, 255, 0.12);
   --hover: rgba(255, 255, 255, 0.055);
+  --input-hover: rgba(255, 255, 255, 0.025);
+  --input-focus: rgba(255, 255, 255, 0.04);
+  --focus-ring: rgba(157, 180, 255, 0.6);
   --line: #25272c;
   --line-strong: #34373e;
   --text: #ededef;
   --muted: #a9adb6;
   --dim: #6b707b;
   --accent: #9db4ff;
+  --option: #c8cbd2;
+  --option-active: #fff;
+  --chip-bg: linear-gradient(180deg, rgba(157, 180, 255, 0.22), rgba(157, 180, 255, 0.14));
+  --chip-shadow:
+    inset 0 0 0 1px rgba(157, 180, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 8px -2px rgba(80, 110, 230, 0.35);
+  --danger: #ff8f8f;
+  --danger-bg: rgba(255, 110, 110, 0.1);
+  --menu-bg: #1e2025;
+  --grid-dot: rgba(255, 255, 255, 0.04);
+  --device-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.75);
   --ease: cubic-bezier(0.3, 0.7, 0.2, 1);
   color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: #eceef2;
+  --bar: #f7f8fa;
+  --bar-top: #fff;
+  --bar-border: rgba(15, 23, 42, 0.08);
+  --bar-shadow: 0 10px 30px -20px rgba(15, 23, 42, 0.25);
+  --surface: #fff;
+  --island-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(15, 23, 42, 0.06), 0 8px 22px -14px rgba(15, 23, 42, 0.2);
+  --edge: rgba(15, 23, 42, 0.09);
+  --edge-strong: rgba(15, 23, 42, 0.14);
+  --hover: rgba(15, 23, 42, 0.05);
+  --input-hover: rgba(15, 23, 42, 0.03);
+  --input-focus: rgba(15, 23, 42, 0.03);
+  --focus-ring: rgba(58, 91, 217, 0.55);
+  --line: #dde0e6;
+  --line-strong: #c4c8d0;
+  --text: #15171c;
+  --muted: #5b616d;
+  --dim: #8d939e;
+  --accent: #3a5bd9;
+  --option: #4a505b;
+  --option-active: #1d3bb8;
+  --chip-bg: linear-gradient(180deg, rgba(58, 91, 217, 0.13), rgba(58, 91, 217, 0.08));
+  --chip-shadow:
+    inset 0 0 0 1px rgba(58, 91, 217, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 6px -2px rgba(58, 91, 217, 0.25);
+  --danger: #d93636;
+  --danger-bg: rgba(217, 54, 54, 0.08);
+  --menu-bg: #fff;
+  --grid-dot: rgba(15, 23, 42, 0.08);
+  --device-shadow: 0 24px 60px -20px rgba(15, 23, 42, 0.4);
+  color-scheme: light;
 }
 
 * {
@@ -69,9 +121,9 @@ svg {
   align-items: center;
   gap: 10px 12px;
   padding: 10px 14px;
-  background: linear-gradient(180deg, #151619, var(--bar));
-  border-bottom: 1px solid rgba(255, 255, 255, 0.045);
-  box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.9);
+  background: linear-gradient(180deg, var(--bar-top), var(--bar));
+  border-bottom: 1px solid var(--bar-border);
+  box-shadow: var(--bar-shadow);
 }
 
 .island {
@@ -83,10 +135,7 @@ svg {
   border: 1px solid var(--edge);
   border-radius: 7px;
   background: var(--surface);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.035),
-    0 1px 2px rgba(0, 0, 0, 0.45),
-    0 8px 22px -14px rgba(0, 0, 0, 0.8);
+  box-shadow: var(--island-shadow);
 }
 
 .sep {
@@ -126,13 +175,13 @@ svg {
 }
 
 .url input:hover {
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--input-hover);
 }
 
 .url input:focus,
 .dims input:focus {
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: inset 0 0 0 1px rgba(157, 180, 255, 0.55);
+  background: var(--input-focus);
+  box-shadow: inset 0 0 0 1px var(--focus-ring);
 }
 
 .icon {
@@ -165,12 +214,22 @@ svg {
 }
 
 .icon.danger:hover:not(:disabled) {
-  background: rgba(255, 110, 110, 0.1);
-  color: #ff8f8f;
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+/* Shows the theme you switch to: sun in dark mode, moon in light mode. */
+.icon-moon,
+[data-theme='light'] .icon-sun {
+  display: none;
+}
+
+[data-theme='light'] .icon-moon {
+  display: block;
 }
 
 :is(.icon, .device-btn, .zoom select):focus-visible {
-  outline: 1px solid rgba(157, 180, 255, 0.7);
+  outline: 1px solid var(--focus-ring);
   outline-offset: -1px;
 }
 
@@ -188,11 +247,8 @@ svg {
   left: 0;
   width: var(--w, 0);
   border-radius: 4px;
-  background: linear-gradient(180deg, rgba(157, 180, 255, 0.22), rgba(157, 180, 255, 0.14));
-  box-shadow:
-    inset 0 0 0 1px rgba(157, 180, 255, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 2px 8px -2px rgba(80, 110, 230, 0.35);
+  background: var(--chip-bg);
+  box-shadow: var(--chip-shadow);
   transform: translateX(var(--x, 0));
   transition:
     transform 0.34s var(--ease),
@@ -230,7 +286,7 @@ svg {
   border: 0;
   border-radius: 4px;
   background: transparent;
-  color: #c8cbd2;
+  color: var(--option);
   font-weight: 500;
   letter-spacing: -0.005em;
   white-space: nowrap;
@@ -243,7 +299,7 @@ svg {
 }
 
 .device-btn.active {
-  color: #fff;
+  color: var(--option-active);
 }
 
 .group:has(.active) .group-icon {
@@ -309,7 +365,7 @@ svg {
 }
 
 .zoom option {
-  background: #1e2025;
+  background: var(--menu-bg);
   color: var(--text);
 }
 
@@ -363,7 +419,7 @@ svg {
   overflow: auto;
   padding: 28px 32px 20px;
   background-color: var(--bg);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1.2px);
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1.2px);
   background-size: 22px 22px;
   background-position: center top;
 }
@@ -382,7 +438,7 @@ svg {
   background: #1b1c20;
   box-shadow:
     inset 0 0 0 1px #2d3036,
-    0 24px 60px -20px rgba(0, 0, 0, 0.75);
+    var(--device-shadow);
   transform-origin: 0 0;
 }
 

@@ -47,6 +47,7 @@ const ui = {
   zoom: $('zoom'),
   bezel: $('bezel'),
   exit: $('exit'),
+  theme: $('theme'),
 };
 
 const state = {
@@ -388,6 +389,11 @@ function bindEvents() {
   ui.bezel.addEventListener('click', () => {
     state.prefs.bezel = !state.prefs.bezel;
     commit();
+  });
+  ui.theme.addEventListener('click', () => {
+    const theme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('vplab:theme', theme);
   });
   ui.exit.addEventListener('click', () => {
     if (state.url) location.assign(state.url);
