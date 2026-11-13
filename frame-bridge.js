@@ -14,12 +14,19 @@
     else style.remove();
   };
 
+  const isClear = (el) => {
+    if (!el) return true;
+    const style = getComputedStyle(el);
+    return style.backgroundImage === 'none' && /^(transparent|rgba\(.*,\s*0\))$/.test(style.backgroundColor);
+  };
+
   let last = '';
   const report = () => {
-    const current = `${location.href}\n${document.title}`;
+    const blankCanvas = isClear(document.documentElement) && isClear(document.body);
+    const current = `${location.href}\n${document.title}\n${blankCanvas}`;
     if (current === last) return;
     last = current;
-    post({ type: 'location', href: location.href, title: document.title });
+    post({ type: 'location', href: location.href, title: document.title, blankCanvas });
   };
 
   window.addEventListener('message', (event) => {

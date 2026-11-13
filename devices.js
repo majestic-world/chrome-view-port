@@ -12,9 +12,9 @@ export const DEVICES = [
 
 export const RESPONSIVE_ID = 'responsive';
 
-// Device frame in CSS px: bezel thickness, outer and screen corner radius.
+// Device frame in CSS px: bezel thickness, outer and screen corner radius (outer = inner + pad).
 export const BEZELS = {
   phone: { pad: 12, outer: 58, inner: 46 },
-  tablet: { pad: 18, outer: 36, inner: 20 },
-  laptop: { pad: 12, outer: 16, inner: 6 },
+  tablet: { pad: 18, outer: 38, inner: 20 },
+  laptop: { pad: 12, outer: 18, inner: 6 },
 };

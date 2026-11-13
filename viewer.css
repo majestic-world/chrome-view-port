@@ -261,14 +261,40 @@ svg {
 
 .device.bare {
   background: none;
-  box-shadow: 0 0 0 1px var(--line-strong);
+  box-shadow: none;
 }
 
 .screen {
   position: relative;
-  overflow: hidden;
   border-radius: var(--inner);
+  background: #1b1c20;
+}
+
+.screen.blank-canvas {
   background: #fff;
+}
+
+/* Rounded corners are painted over the page instead of being its clip edge: at fractional scale
+   (Windows 125%/150% + zoom) Chrome's clip of the out-of-process iframe leaks the page's
+   background as a light seam. The iframe is clipped at half the radius, which keeps its corner
+   inside the bezel while that seam sits under this overlay; the outward spread fills the bezel
+   and the inset ring (--hair = 1 screen px at the current zoom) hides edge snapping on straight sides. */
+.screen::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    0 0 0 calc(var(--pad) - 1px) #1b1c20,
+    inset 0 0 0 var(--hair) #1b1c20;
+  pointer-events: none;
+}
+
+.bare .screen::after {
+  box-shadow:
+    0 0 0 var(--hair) var(--line-strong),
+    inset 0 0 0 var(--hair) var(--line-strong);
 }
 
 .screen iframe {
@@ -276,7 +302,8 @@ svg {
   width: 100%;
   height: 100%;
   border: 0;
-  background: #fff;
+  background: transparent;
+  clip-path: inset(0 round calc(var(--inner) / 2));
 }
 
 .empty {

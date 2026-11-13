@@ -113,6 +113,7 @@ function render() {
   ui.device.style.setProperty('--pad', `${pad}px`);
   ui.device.style.setProperty('--outer', `${bezel?.outer ?? 0}px`);
   ui.device.style.setProperty('--inner', `${bezel?.inner ?? 0}px`);
+  ui.device.style.setProperty('--hair', `${1 / scale}px`);
   ui.device.style.transform = `scale(${scale})`;
   ui.screen.style.width = `${width}px`;
   ui.screen.style.height = `${height}px`;
@@ -219,6 +220,7 @@ function navigate(raw) {
     return;
   }
   ui.screen.classList.remove('is-empty');
+  ui.screen.classList.add('blank-canvas');
   state.url = result.url;
   state.bridged = false;
   ui.url.value = result.url;
@@ -371,7 +373,7 @@ function bindEvents() {
 
   window.addEventListener('message', (event) => {
     if (event.source !== ui.frame.contentWindow || event.data?.source !== 'vplab') return;
-    const { type, href, title } = event.data;
+    const { type, href, title, blankCanvas } = event.data;
     if (type === 'hello') {
       state.bridged = true;
       setLoading(true);
@@ -379,6 +381,7 @@ function bindEvents() {
       setLocation(href, '');
     } else if (type === 'location') {
       setLocation(href, title);
+      ui.screen.classList.toggle('blank-canvas', Boolean(blankCanvas));
     }
     updateNavButtons();
   });
