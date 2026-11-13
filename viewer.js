@@ -268,7 +268,8 @@ function postToFrame(message) {
 }
 
 function sendConfig() {
-  postToFrame({ type: 'config', hideScrollbars: currentDevice()?.overlayScrollbars ?? true });
+  const device = currentDevice();
+  postToFrame({ type: 'config', hideScrollbars: device?.overlayScrollbars ?? true, touch: device?.touch ?? true });
 }
 
 // ---------- Free resize ----------
