@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Viewport Lab</title>
+    <link rel="icon" href="icons/32.png" />
+    <link rel="stylesheet" href="viewer.css" />
+    <script type="module" src="viewer.js"></script>
+  </head>
+  <body>
+    <header class="bar">
+      <div class="nav">
+        <button id="back" class="icon" type="button" title="Voltar" disabled>
+          <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <button id="forward" class="icon" type="button" title="Avançar" disabled>
+          <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+        <button id="reload" class="icon" type="button" title="Recarregar">
+          <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
+        </button>
+        <form id="urlForm" class="url">
+          <input id="url" type="text" spellcheck="false" autocomplete="off" placeholder="URL — ex: localhost:3000" />
+        </form>
+      </div>
+
+      <nav id="devices" class="devices" aria-label="Dispositivos"></nav>
+
+      <div class="controls">
+        <div class="dims" title="Largura × altura (CSS px)">
+          <input id="width" type="number" min="50" max="4096" aria-label="Largura" />
+          <span>×</span>
+          <input id="height" type="number" min="50" max="4096" aria-label="Altura" />
+        </div>
+        <button id="rotate" class="icon" type="button" title="Girar (R)">
+          <svg viewBox="0 0 24 24"><rect x="3" y="9" width="12" height="12" rx="2" /><path d="M12 3a8 8 0 0 1 8 8" /><path d="m17 9 3 2 2-3" /></svg>
+        </button>
+        <select id="zoom" class="select" title="Zoom">
+          <option value="fit">Ajustar</option>
+          <option value="25">25%</option>
+          <option value="50">50%</option>
+          <option value="75">75%</option>
+          <option value="100">100%</option>
+          <option value="125">125%</option>
+          <option value="150">150%</option>
+        </select>
+        <button id="bezel" class="icon" type="button" title="Moldura do dispositivo" aria-pressed="true">
+          <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3" /><path d="M11 18h2" /></svg>
+        </button>
+        <button id="exit" class="icon" type="button" title="Sair (volta para a página)">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <div class="progress"></div>
+    </header>
+
+    <main id="stage" class="stage">
+      <div id="sizer" class="sizer">
+        <div id="device" class="device">
+          <div id="screen" class="screen">
+            <iframe
+              id="frame"
+              title="Página em teste"
+              allow="autoplay; camera; clipboard-read; clipboard-write; fullscreen; geolocation; microphone; payment"
+            ></iframe>
+            <div id="empty" class="empty"></div>
+          </div>
+        </div>
+        <div class="handle handle-x" data-axis="x" title="Arraste para redimensionar"></div>
+        <div class="handle handle-y" data-axis="y" title="Arraste para redimensionar"></div>
+        <div class="handle handle-xy" data-axis="xy" title="Arraste para redimensionar"></div>
+      </div>
+      <p id="caption" class="caption"></p>
+    </main>
+  </body>
+</html>
