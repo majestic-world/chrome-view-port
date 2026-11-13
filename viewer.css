@@ -16,8 +16,8 @@
   --line: #25272c;
   --line-strong: #34373e;
   --text: #ededef;
-  --muted: #989ca6;
-  --dim: #60646e;
+  --muted: #a9adb6;
+  --dim: #6b707b;
   --accent: #9db4ff;
   --ease: cubic-bezier(0.3, 0.7, 0.2, 1);
   color-scheme: dark;
@@ -81,7 +81,7 @@ svg {
   height: 38px;
   padding: 3px;
   border: 1px solid var(--edge);
-  border-radius: 11px;
+  border-radius: 7px;
   background: var(--surface);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.035),
@@ -114,7 +114,7 @@ svg {
   height: 30px;
   padding: 0 10px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   background: transparent;
   outline: none;
   font-size: 12.5px;
@@ -143,7 +143,7 @@ svg {
   height: 30px;
   padding: 0;
   border: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   background: transparent;
   color: var(--muted);
   cursor: pointer;
@@ -187,12 +187,12 @@ svg {
   bottom: 3px;
   left: 0;
   width: var(--w, 0);
-  border-radius: 8px;
-  background: linear-gradient(180deg, #2b2e35, #23262c);
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(157, 180, 255, 0.22), rgba(157, 180, 255, 0.14));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.09),
-    0 0 0 1px rgba(255, 255, 255, 0.055),
-    0 2px 6px rgba(0, 0, 0, 0.45);
+    inset 0 0 0 1px rgba(157, 180, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 2px 8px -2px rgba(80, 110, 230, 0.35);
   transform: translateX(var(--x, 0));
   transition:
     transform 0.34s var(--ease),
@@ -228,7 +228,7 @@ svg {
   height: 30px;
   padding: 0 11px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   background: transparent;
   color: var(--muted);
   font-weight: 500;
@@ -243,7 +243,11 @@ svg {
 }
 
 .device-btn.active {
-  color: #fff;
+  color: #dfe7ff;
+}
+
+.group:has(.active) .group-icon {
+  color: var(--accent);
 }
 
 /* Viewport tools */
@@ -264,7 +268,7 @@ svg {
   height: 30px;
   padding: 0 4px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   background: transparent;
   outline: none;
   color: var(--text);
@@ -288,7 +292,7 @@ svg {
   height: 30px;
   padding: 0 24px 0 10px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   outline: none;
   background: transparent
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='none' stroke='%23989ca6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m2 3.5 3 3 3-3'/%3E%3C/svg%3E")
