@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: block;
+  src: url('fonts/InterVariable.woff2') format('woff2');
+}
+
 :root {
   --bg: #0e0f11;
   --bar: #151619;
@@ -29,7 +37,7 @@ body {
   overflow: hidden;
   background: var(--bg);
   color: var(--text);
-  font: 12.5px/1.4 system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font: 12.5px/1.4 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 button,
