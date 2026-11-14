@@ -1,5 +1,6 @@
 const VIEWER_URL = chrome.runtime.getURL('viewer.html');
-const RULE_ID = 1;
+const FRAME_RULE_ID = 1;
+const NO_CACHE_RULE_ID = 2;
 const TABS_KEY = 'viewerTabs';
 const urlKey = (tabId) => `url:${tabId}`;
 
@@ -12,15 +13,16 @@ async function readTabs() {
   return tabs;
 }
 
-// Strip framing protections only for sub-frames inside viewer tabs.
+// Inside viewer tabs only: strip framing protections from sub-frames, and make every request
+// (page, CSS, JS, images) skip Chrome's HTTP cache so the framed site always shows the current deploy.
 async function writeTabs(tabs) {
   await chrome.storage.session.set({ [TABS_KEY]: tabs });
   await chrome.declarativeNetRequest.updateSessionRules({
-    removeRuleIds: [RULE_ID],
+    removeRuleIds: [FRAME_RULE_ID, NO_CACHE_RULE_ID],
     addRules: tabs.length
       ? [
           {
-            id: RULE_ID,
+            id: FRAME_RULE_ID,
             priority: 1,
             action: {
               type: 'modifyHeaders',
@@ -30,6 +32,19 @@ async function writeTabs(tabs) {
               ],
             },
             condition: { tabIds: tabs, resourceTypes: ['sub_frame'] },
+          },
+          {
+            id: NO_CACHE_RULE_ID,
+            priority: 1,
+            action: {
+              type: 'modifyHeaders',
+              requestHeaders: [
+                { header: 'cache-control', operation: 'set', value: 'no-cache' },
+                { header: 'pragma', operation: 'set', value: 'no-cache' },
+              ],
+              responseHeaders: [{ header: 'cache-control', operation: 'set', value: 'no-store' }],
+            },
+            condition: { tabIds: tabs },
           },
         ]
       : [],
