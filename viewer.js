@@ -24,6 +24,7 @@ const GROUPS = [
   { type: 'phone', label: 'Celular', icon: svg('<rect x="7" y="2" width="10" height="20" rx="2"/>') },
   { type: 'tablet', label: 'Tablet', icon: svg('<rect x="4" y="2" width="16" height="20" rx="2"/>') },
   { type: 'laptop', label: 'Notebook', icon: svg('<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>') },
+  { type: 'desktop', label: 'Desktop', icon: svg('<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 21h8M12 16v5"/>') },
 ];
 const RESPONSIVE_ICON = svg('<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>');
 

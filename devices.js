@@ -9,6 +9,7 @@ export const DEVICES = [
   { id: 'galaxy-tab-s9', type: 'tablet', label: 'Galaxy Tab S9', name: 'Samsung Galaxy Tab S9', width: 800, height: 1280, dpr: 2, overlayScrollbars: true, touch: true },
   { id: 'nitro-v16', type: 'laptop', label: 'Nitro V16', name: 'Acer Nitro V16 (1920×1200 @125%)', width: 1536, height: 960, dpr: 1.25, overlayScrollbars: false, touch: false },
   { id: 'macbook-air-2022', type: 'laptop', label: 'MacBook Air', name: 'MacBook Air 2022 (M2)', width: 1470, height: 956, dpr: 2, overlayScrollbars: true, touch: false },
+  { id: 'full-hd', type: 'desktop', label: 'Full HD', name: 'Monitor Full HD (1920×1080)', width: 1920, height: 1080, dpr: 1, overlayScrollbars: false, touch: false },
 ];
 
 export const RESPONSIVE_ID = 'responsive';
@@ -17,5 +18,6 @@ export const RESPONSIVE_ID = 'responsive';
 export const BEZELS = {
   phone: { pad: 12, outer: 58, inner: 46 },
   tablet: { pad: 18, outer: 38, inner: 20 },
+  desktop: { pad: 12, outer: 18, inner: 6 },
   laptop: { pad: 12, outer: 18, inner: 6 },
 };

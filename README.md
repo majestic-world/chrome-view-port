@@ -1,6 +1,6 @@
 # Viewport Lab
 
-Extensão do Chrome para testar seu site em resoluções reais de iPhone 17, iPad Air, Galaxy Tab S9, Acer Nitro V16 e MacBook Air, ou redimensionar livremente.
+Extensão do Chrome para testar seu site em resoluções reais de iPhone 17, iPad Air, Galaxy Tab S9, Acer Nitro V16, MacBook Air e monitor Full HD, ou redimensionar livremente.
 
 ## Instalação
 
